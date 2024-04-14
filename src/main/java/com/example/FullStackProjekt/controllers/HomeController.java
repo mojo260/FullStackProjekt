@@ -25,6 +25,7 @@ public class HomeController {
         anotherPerson.setFirstName("Jane");
         anotherPerson.setLastName("Smith");
 
+
         model.addAttribute("anotherPerson",anotherPerson);
         return "home/index";
     }

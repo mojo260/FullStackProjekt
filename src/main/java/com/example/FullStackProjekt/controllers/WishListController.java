@@ -16,6 +16,7 @@ public class WishListController {
         wish.setWishId(1);
         wish.setWishTekst("jeg vil havde en durum");
 
+
         model.addAttribute("id", wish.getWishId());
         model.addAttribute("wish tekst", wish.getWishTekst());
 
