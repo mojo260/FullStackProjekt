@@ -5,16 +5,6 @@ public class Person {
     private String firstName;
     private String lastName;
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    private String password;
-
     public Person(){
     }
 
