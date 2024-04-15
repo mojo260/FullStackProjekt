@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>FullStackProjekt</artifactId>
+	<artifactId>WishListProject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>FullStackProjekt</name>
 	<description>fullstackprojekt for skole</description>
@@ -34,6 +34,11 @@
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
