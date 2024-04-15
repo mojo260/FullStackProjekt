@@ -1,10 +1,7 @@
 package com.example.FullStackProjekt.wishlistproject.controller;
-
-
-package com.example.wishlistproject.controller;
-
 import com.example.FullStackProjekt.wishlistproject.model.User;
-import com.example.wishlistproject.model.Wishlist;
+import com.example.FullStackProjekt.wishlistproject.model.Wish;
+import com.example.FullStackProjekt.wishlistproject.model.WishList;
 import com.example.FullStackProjekt.wishlistproject.service.WishListService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -17,7 +14,7 @@ public class WishListController {
 
     private WishListService wishlistService;
 
-    public WishlistController(WishListService wishlistService) {
+    public WishListController(WishListService wishlistService) {
         this.wishlistService = wishlistService;
     }
 
@@ -95,7 +92,7 @@ public class WishListController {
 
     @GetMapping("/createwish")
     public String createWish(Model model, HttpSession session) {
-        WishDTO wish = new WishDTO();
+        Wish wish = new Wish();
         User user = (User) session.getAttribute("user");
 
         model.addAttribute("wish", wish);
@@ -104,9 +101,9 @@ public class WishListController {
     }
 
     @PostMapping("/createwish")
-    public String createdWish(@ModelAttribute("wish") WishDTO wish, HttpSession session) {
+    public String createdWish(@ModelAttribute("wish") Wish wish, HttpSession session) {
         wishlistService.createWish(wish);
-        return "redirect:/wishlist/seewishlists";
+        return "redirect:/wishlist/seewishes/{listid}";
     }
 
     @GetMapping("/seewishes/{listid}")
@@ -118,13 +115,13 @@ public class WishListController {
     @PostMapping("/deletewish")
     public String deleteWish(@RequestParam("id") int id) {
         wishlistService.deleteWish(id);
-        return "redirect:/wishlist/seewishes";
+        return "redirect:/wishlist/seewishes/{listid}";
 
     }
 
     @GetMapping("/edit/wish/{id}")
     public String editWish(@PathVariable int id, Model model, HttpSession session) {
-        WishDTO wish = wishlistService.findWishById(id);
+        Wish wish = wishlistService.findWishById(id);
         User user = (User) session.getAttribute("user");
         model.addAttribute("wish", wish);
         model.addAttribute("wishlists", wishlistService.getWishlists(user.getUserID()));
@@ -132,7 +129,7 @@ public class WishListController {
     }
 
     @PostMapping("/edit/wish/{id}")
-    public String editedWish(@PathVariable int id, @ModelAttribute WishDTO editedWish) {
+    public String editedWish(@PathVariable int id, @ModelAttribute Wish editedWish) {
         wishlistService.editWish(id, editedWish);
         return "redirect:/wishlist/seewishes";
     }
@@ -163,14 +160,14 @@ public class WishListController {
 
     @GetMapping("/createwishlist")
     public String createWishlist(Model model, HttpSession session) {
-        wishlistDTO wishlist = new wishlistDTO();
-        model.addAttribute("wishlist", wishlist);
+        WishList wishList = new WishList();
+        model.addAttribute("wishlist", wishList);
 
         return isLoggedIn(session) ? "createWishlist" : "index";
     }
 
     @PostMapping("/createwishlist")
-    public String createdWishlist(@ModelAttribute("wishlist") wishlistDTO wishlist,
+    public String createdWishlist(@ModelAttribute("wishlist") WishList wishlist,
                                   HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user != null) {
@@ -183,14 +180,14 @@ public class WishListController {
 
     @GetMapping("/edit/wishlist/{listid}")
     public String editWishlist(@PathVariable int listid, Model model) {
-        wishlistDTO wishlist = wishlistService.findWishListById(listid);
+        WishList wishlist = wishlistService.findWishListById(listid);
         model.addAttribute("wishlist", wishlist);
         return "editWishlist";
     }
 
     @PostMapping("/edit/wishlist/{listid}")
-    public String editedWishlist(@PathVariable int listid, @ModelAttribute wishlistDTO editedWishlist) {
-        wishlistService.editWishlist(listid, editedWishlist);
+    public String editedWishList(@PathVariable int listid, @ModelAttribute WishList editedWishList) {
+        wishlistService.editWishlist(listid, editedWishList);
         return "redirect:/wishlist/seewishlists";
     }
 
