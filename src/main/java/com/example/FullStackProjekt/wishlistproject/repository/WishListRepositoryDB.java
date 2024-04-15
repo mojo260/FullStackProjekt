@@ -1,5 +1,6 @@
 package com.example.FullStackProjekt.wishlistproject.repository;
 import com.example.FullStackProjekt.wishlistproject.model.User;
+import com.example.FullStackProjekt.wishlistproject.model.Wish;
 import com.example.FullStackProjekt.wishlistproject.model.WishList;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -37,7 +38,7 @@ public class WishListRepositoryDB {
 
             while (resultSet.next()) {
 
-                wishLists.add(new wishlistDTO(resultSet.getInt(1), resultSet.getString(2),
+                wishLists.add(new WishList(resultSet.getInt(1), resultSet.getString(2),
                         resultSet.getString(3)));
             }
 
@@ -48,7 +49,7 @@ public class WishListRepositoryDB {
         }
     }
 
-    public void createWish(WishDTO wish) {
+    public void createWish(Wish wish) {
 
         try (Connection con = getConnection()) {
             // ID's
@@ -57,7 +58,7 @@ public class WishListRepositoryDB {
             // find listID
             String findListID = "select listID from wish_lists where listName = ?;";
             PreparedStatement pstmt = con.prepareStatement(findListID);
-            pstmt.setString(1, wish.getListName());
+            pstmt.setString(1, WishList.getListName());
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
@@ -106,7 +107,7 @@ public class WishListRepositoryDB {
 
     }
 
-    public void createWishlist(int id, wishlistDTO wishlist) {
+    public void createWishlist(int id, WishList wishlist) {
 
         try (Connection con = getConnection()) {
 
@@ -114,8 +115,8 @@ public class WishListRepositoryDB {
                     "VALUES(?, ?, ?)";
 
             PreparedStatement preparedStatement = con.prepareStatement(insertList);
-            preparedStatement.setString(1, wishlist.getListName());
-            preparedStatement.setString(2, wishlist.getListImageURL());
+            preparedStatement.setString(1, WishList.getListName());
+            preparedStatement.setString(2, WishList.getListImageURL());
             preparedStatement.setInt(3, id);
             preparedStatement.executeUpdate();
 
@@ -124,9 +125,9 @@ public class WishListRepositoryDB {
         }
     }
 
-    public wishlistDTO findWishListById(int listid) {
+    public WishList findWishListById(int listid) {
 
-        wishlistDTO wishlist = null;
+        WishList wishlist = null;
 
         try(Connection con = getConnection()) {
             String sql = "SELECT * FROM wish_lists WHERE listid = ?";
@@ -135,7 +136,7 @@ public class WishListRepositoryDB {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                wishlist = new wishlistDTO();
+                wishlist = new WishList();
                 wishlist.setListID(resultSet.getInt("listid"));
                 wishlist.setListName(resultSet.getString("listName"));
                 wishlist.setListImageURL(resultSet.getString("listImageURL"));
@@ -146,7 +147,7 @@ public class WishListRepositoryDB {
         return wishlist;
     }
 
-    public void editWishlist(int listid, wishlistDTO editedWishlist) {
+    public void editWishlist(int listid, WishList editedWishlist) {
 
         try (Connection con = getConnection()) {
 
@@ -166,9 +167,9 @@ public class WishListRepositoryDB {
     }
 
 
-    public List<WishDTO> getWishes(int listid) {
+    public List<Wish> getWishes(int listid) {
 
-        List<WishDTO> wishes = new ArrayList<>();
+        List<Wish> wishes = new ArrayList<>();
 
         try (Connection con = getConnection()){
             String sql = "SELECT wishid, wishname, wishlink, wishimageurl, wishdescription, wishprice, wishcount\n" +
@@ -178,7 +179,7 @@ public class WishListRepositoryDB {
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
 
-                wishes.add(new WishDTO(resultSet.getInt(1),
+                wishes.add(new Wish(resultSet.getInt(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getString(4),
@@ -194,9 +195,9 @@ public class WishListRepositoryDB {
         }
     }
 
-    public WishDTO findWishById(int id) {
+    public Wish findWishById(int id) {
 
-        WishDTO wish = null;
+        Wish wish = null;
 
         try(Connection con = getConnection()) {
             String sql = "SELECT * FROM wishes WHERE wishid = ?";
@@ -205,7 +206,7 @@ public class WishListRepositoryDB {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                wish = new WishDTO();
+                wish = new Wish();
                 wish.setWishID(resultSet.getInt("wishid"));
                 wish.setWishName(resultSet.getString("wishName"));
                 wish.setWishLink(resultSet.getString("wishLink"));
@@ -221,7 +222,7 @@ public class WishListRepositoryDB {
         return wish;
     }
 
-    public void editWish(int id, WishDTO editedWish) {
+    public void editWish(int id, Wish editedWish) {
 
 
         try (Connection con = getConnection()) {
@@ -289,31 +290,6 @@ public class WishListRepositoryDB {
 
     }
 
-/*    public boolean checkLogin(String username, String password) {
-
-        try (Connection con = getConnection()) {
-            String sql = "SELECT * FROM users WHERE userName = ? AND userPassword = ?";
-            PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
-            ResultSet rs = pstmt.executeQuery();
-
-            String uid = null;
-            String pwd = null;
-
-            if (rs.next()) {
-                uid = rs.getString("userName");
-                pwd = rs.getString("userPassword");
-            }
-
-            if (uid.equals(username) && (pwd.equals(password))) {
-                return true;
-            } else return false;
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
 
     public User getUser(String userName) {
         // User user = new User();

@@ -7,7 +7,7 @@ public class WishList {
     private String listImageURL;
     private int userID;
 
-    public WishList(int listID, String listName, String listImageURL, int userID) {
+    public WishList(int listID, String listName, String listImageURL) {
         this.listID = listID;
         this.listName = listName;
         this.listImageURL = listImageURL;
