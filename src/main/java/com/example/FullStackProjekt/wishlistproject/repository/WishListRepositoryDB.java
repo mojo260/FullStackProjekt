@@ -38,7 +38,7 @@ public class WishListRepositoryDB {
 
             while (resultSet.next()) {
 
-                wishLists.add(new wishlistDTO(resultSet.getInt(1), resultSet.getString(2),
+                wishLists.add(new WishList(resultSet.getInt(1), resultSet.getString(2),
                         resultSet.getString(3)));
             }
 
@@ -58,7 +58,7 @@ public class WishListRepositoryDB {
             // find listID
             String findListID = "select listID from wish_lists where listName = ?;";
             PreparedStatement pstmt = con.prepareStatement(findListID);
-            pstmt.setString(1, wish.getListName());
+            pstmt.setString(1, WishList.getListName());
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
@@ -107,7 +107,7 @@ public class WishListRepositoryDB {
 
     }
 
-    public void createWishlist(int id, wishlistDTO wishlist) {
+    public void createWishlist(int id, WishList wishlist) {
 
         try (Connection con = getConnection()) {
 
@@ -115,8 +115,8 @@ public class WishListRepositoryDB {
                     "VALUES(?, ?, ?)";
 
             PreparedStatement preparedStatement = con.prepareStatement(insertList);
-            preparedStatement.setString(1, wishlist.getListName());
-            preparedStatement.setString(2, wishlist.getListImageURL());
+            preparedStatement.setString(1, WishList.getListName());
+            preparedStatement.setString(2, WishList.getListImageURL());
             preparedStatement.setInt(3, id);
             preparedStatement.executeUpdate();
 
@@ -147,7 +147,7 @@ public class WishListRepositoryDB {
         return wishlist;
     }
 
-    public void editWishlist(int listid, Wishlist editedWishlist) {
+    public void editWishlist(int listid, WishList editedWishlist) {
 
         try (Connection con = getConnection()) {
 
