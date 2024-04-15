@@ -1,10 +1,10 @@
-package com.example.wishlistproject.service;
+package com.example.FullStackProjekt.wishlistproject.service;
 
+import com.example.FullStackProjekt.wishlistproject.model.Wish;
+import com.example.FullStackProjekt.wishlistproject.model.WishList;
 import com.example.wishlistproject.dto.WishDTO;
 import com.example.wishlistproject.dto.wishlistDTO;
-import com.example.wishlistproject.model.User;
-import com.example.wishlistproject.model.Wish;
-import com.example.wishlistproject.model.WishList;
+import com.example.FullStackProjekt.wishlistproject.model.User;
 import com.example.wishlistproject.model.Wishlist;
 import org.springframework.stereotype.Service;
 

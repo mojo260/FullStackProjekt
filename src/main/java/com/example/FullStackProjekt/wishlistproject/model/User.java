@@ -1,4 +1,4 @@
-package com.example.wishlistproject.model;
+package com.example.FullStackProjekt.wishlistproject.model;
 
 public class User {
 

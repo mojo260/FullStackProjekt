@@ -1,4 +1,4 @@
-package com.example.wishlistproject.wishlist;
+package com.example.FullStackProjekt.wishlistproject.wishlist;
 
 public class Wish {
     private int wishId;

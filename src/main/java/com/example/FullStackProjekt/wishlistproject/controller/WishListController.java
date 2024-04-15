@@ -1,11 +1,11 @@
-package com.example.wishlistproject.controller;
+package com.example.FullStackProjekt.wishlistproject.controller;
 
 
 package com.example.wishlistproject.controller;
 
-import com.example.wishlistproject.model.User;
+import com.example.FullStackProjekt.wishlistproject.model.User;
 import com.example.wishlistproject.model.Wishlist;
-import com.example.wishlistproject.service.WishListService;
+import com.example.FullStackProjekt.wishlistproject.service.WishListService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
