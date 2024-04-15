@@ -1,4 +1,4 @@
-package com.example.FullStackProjekt;
+package com.example.FullStackProjekt.wishlistproject;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
