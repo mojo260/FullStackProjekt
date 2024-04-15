@@ -1,4 +1,4 @@
-package com.example.FullStackProjekt.wishlistproject.repository;
+package com.example.FullStackProjekt.wishlistproject.repositories;
 import com.example.FullStackProjekt.wishlistproject.model.User;
 import com.example.FullStackProjekt.wishlistproject.model.Wish;
 import com.example.FullStackProjekt.wishlistproject.model.WishList;
@@ -38,7 +38,8 @@ public class WishListRepositoryDB {
 
             while (resultSet.next()) {
 
-                wishLists.add(new WishList(resultSet.getInt(1), resultSet.getString(2),
+                wishLists.add(new WishList(resultSet.getInt(1),
+                        resultSet.getString(2),
                         resultSet.getString(3)));
             }
 
@@ -50,7 +51,6 @@ public class WishListRepositoryDB {
     }
 
     public void createWish(Wish wish) {
-
         try (Connection con = getConnection()) {
             // ID's
             int listID = 0;
@@ -58,7 +58,7 @@ public class WishListRepositoryDB {
             // find listID
             String findListID = "select listID from wish_lists where listName = ?;";
             PreparedStatement pstmt = con.prepareStatement(findListID);
-            pstmt.setString(1, WishList.getListName());
+            pstmt.setString(1, wish.getWishName()); // Brug af instansvariabel fra "wish" parameter
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
@@ -68,7 +68,7 @@ public class WishListRepositoryDB {
             String createWish = "insert into wishes (wishName, wishLink, wishImageURL, wishDescription, wishPrice, wishCount, listID) "
                     + "values(?, ?, ?, ?, ?, ?, ?);";
 
-            pstmt = con.prepareStatement(createWish, Statement.RETURN_GENERATED_KEYS); // return autoincremented keys
+            pstmt = con.prepareStatement(createWish, PreparedStatement.RETURN_GENERATED_KEYS); // Brug af PreparedStatement.RETURN_GENERATED_KEYS
             pstmt.setString(1, wish.getWishName());
             pstmt.setString(2, wish.getWishLink());
             pstmt.setString(3, wish.getWishImageURL());
@@ -79,7 +79,7 @@ public class WishListRepositoryDB {
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e); // Håndtering af exceptionen ved at kaste en RuntimeException
         }
     }
 
@@ -115,8 +115,8 @@ public class WishListRepositoryDB {
                     "VALUES(?, ?, ?)";
 
             PreparedStatement preparedStatement = con.prepareStatement(insertList);
-            preparedStatement.setString(1, WishList.getListName());
-            preparedStatement.setString(2, WishList.getListImageURL());
+            preparedStatement.setString(1, wishlist.getListName());
+            preparedStatement.setString(2, wishlist.getListImageURL());
             preparedStatement.setInt(3, id);
             preparedStatement.executeUpdate();
 
@@ -124,7 +124,6 @@ public class WishListRepositoryDB {
             e.printStackTrace();
         }
     }
-
     public WishList findWishListById(int listid) {
 
         WishList wishlist = null;
@@ -233,7 +232,7 @@ public class WishListRepositoryDB {
             // find listID
             String findListID = "select listID from wish_lists where listName = ?;";
             PreparedStatement pstmt = con.prepareStatement(findListID);
-            pstmt.setString(1, editedWish.getListName());
+            pstmt.setString(1, editedWish.getWishName());
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {

@@ -1,21 +1,18 @@
 package com.example.FullStackProjekt.wishlistproject.service;
 
+import com.example.FullStackProjekt.wishlistproject.model.User;
 import com.example.FullStackProjekt.wishlistproject.model.Wish;
 import com.example.FullStackProjekt.wishlistproject.model.WishList;
-import com.example.wishlistproject.dto.WishDTO;
-import com.example.wishlistproject.dto.wishlistDTO;
-import com.example.FullStackProjekt.wishlistproject.model.User;
-import com.example.wishlistproject.model.Wishlist;
+import com.example.FullStackProjekt.wishlistproject.repositories.WishListRepositoryDB;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
 public class WishListService {
 
-    private com.example.wishlistproject.repositories.WishListRepositoryDB wishlistRepositoryDB;
+    private WishListRepositoryDB wishlistRepositoryDB;
 
-    public WishListService(com.example.wishlistproject.repositories.WishListRepositoryDB wishlistRepositoryDB) {
+    public WishListService(WishListRepositoryDB wishlistRepositoryDB) {
         this.wishlistRepositoryDB = wishlistRepositoryDB;
     }
 
@@ -47,17 +44,13 @@ public class WishListService {
         return wishlistRepositoryDB.findWishListById(listid);
     }
 
-    public void editWishlist(int listid, wishlistDTO editedWishlist) {
+    public void editWishlist(int listid, WishList editedWishlist) {
         wishlistRepositoryDB.editWishlist(listid,editedWishlist);
     }
 
-    public List<WishDTO> getWishes(int listid) {
+    public List<Wish> getWishes(int listid) {
         return wishlistRepositoryDB.getWishes(listid);
     }
-
-  /*  public boolean checkLogin(String username, String password) {
-        return wishlistRepositoryDB.checkLogin(username, password);
-    }*/
 
     public User getUser(String uid) {
         return wishlistRepositoryDB.getUser(uid);
@@ -78,8 +71,7 @@ public class WishListService {
     public void deleteWishlist(int id) {
         wishlistRepositoryDB.deleteWishlist(id);
     }
-    public List<wishlistDTO> getWishlists(int id) {
+    public List<WishList> getWishlists(int id) {
         return wishlistRepositoryDB.getWishlists(id);
     }
-
 }

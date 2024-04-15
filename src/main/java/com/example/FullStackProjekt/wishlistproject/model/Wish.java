@@ -15,7 +15,7 @@ public class Wish {
     List<String> wishLists;
 
     public Wish(int wishID, String wishName, String wishLink, String wishImageURL, String wishDescription,
-                double wishPrice, int wishCount, int listID) {
+                double wishPrice, int wishCount) {
 
         this.wishID = wishID;
         this.wishName = wishName;
